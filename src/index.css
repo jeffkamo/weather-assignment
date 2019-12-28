@@ -15,6 +15,13 @@ body {
   font-size: 10px;
 }
 
+@media (min-width: 640px) {
+  html,
+  body {
+    font-size: 16px;
+  }
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -22,6 +29,12 @@ main {
   min-height: 100vh;
   padding: 1rem 0rem;
   text-align: center;
+}
+
+@media (min-width: 640px) {
+  main {
+    padding: 2rem 4rem;
+  }
 }
 
 h1,
@@ -56,51 +69,4 @@ p {
 .today__temp {
   font-size: 15rem;
   line-height: 1em;
-}
-
-.forecasts {
-  display: flex;
-}
-
-.forecast {
-  flex: 1 1 auto;
-  padding: 2em 0;
-}
-
-.forecast:nth-child(odd) {
-  background: hsla(197, 87%, 35%, 0.1);
-}
-
-.forecast__date {
-  font-size: 0.5rem;
-  line-height: 1rem;
-  font-weight: bold;
-}
-
-.forecast__day {
-  display: block;
-  font-size: 1.75rem;
-  line-height: 1em;
-  text-transform: uppercase;
-}
-
-.forecast__month-day {
-  font-size: 1rem;
-  line-height: 2em;
-}
-
-.forecast__temp {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: bold;
-  line-height: 1em;
-}
-
-.forecast__weather-icon {
-  display: inline-block;
-  font-size: 4rem;
-  line-height: 1em;
-  height: 50px;
-  width: 50px;
-  margin: 0.5em 0;
 }

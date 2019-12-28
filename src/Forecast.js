@@ -1,4 +1,5 @@
 import React from "react";
+import "./Forecast.css";
 
 function Forecast({ datetime, temp, icon, description }) {
   const date = new Date(datetime);

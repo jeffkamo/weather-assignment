@@ -2,7 +2,7 @@
 
 ## Task
 
-- [ ] Use the [OpenWeatherMap](http://openweathermap.org/forecast5) 5 day weather forecast API to retrieve and display the current 5-day weather forecast for a city (ex. Vancouver)
+- [x] Use the [OpenWeatherMap](http://openweathermap.org/forecast5) 5 day weather forecast API to retrieve and display the current 5-day weather forecast for a city (ex. Vancouver)
 
 ## Stretch Goals
 
@@ -12,4 +12,10 @@
 
 ## Assumptions
 
-Regarding which data to use for any given day (@TODO: WRITE THIS)
+_Regarding today's temperature:_
+
+I am assuming that the Noon time period is reasonably representative of today's temperature. I also currently hardcode which item from the data list is the noon time data point, but I'm not actually sure if that's true. Someting to improve later.
+
+_Regarding which data to use for any given day:_
+
+When you fetch the 5-day forecast data, it returns ~40 data points across those days, but I only want five. For an initial implementation, trim the list down to 5. The logic that picks the five does not include any thought around which part of the day the forecast should be taken from. That would be an improvement on the logic.
