@@ -8,7 +8,9 @@
 
 - [ ] Create a responsive version
 - [ ] Add a feature to explore the weather information in other cities
-- [ ] Deploy your assignment somewhere and include the link in your README so we can try it out
+- [x] Deploy your assignment somewhere and include the link in your README so we can try it out
+
+Visit [jeffkamo.github.io/weather-assignment/](https://jeffkamo.github.io/weather-assignment/) for the deployed version.
 
 ## Assumptions
 

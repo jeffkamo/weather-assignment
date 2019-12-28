@@ -2,32 +2,33 @@ import React, { useState, useEffect } from "react";
 import Forecast from "./Forecast.js";
 
 const FEATURE = "forecast";
-const CITY_ID = "6173331";
 const API_KEY = "209216b63928f0f2398d2bfb876964b1";
 const UNIT = "metric";
-const WEATHER_API = `https://api.openweathermap.org/data/2.5/${FEATURE}?id=${CITY_ID}&appid=${API_KEY}&units=${UNIT}`;
+const COUNTRY_CODE = "ca";
 
 function App() {
-  const [city, setCity] = useState(null);
+  const [cityName, setCityName] = useState("Vancouver");
   const [today, setToday] = useState(null);
   const [forecasts, setForecasts] = useState([]);
+
+  const WEATHER_API = `https://api.openweathermap.org/data/2.5/${FEATURE}?q=${cityName},${COUNTRY_CODE}&appid=${API_KEY}&units=${UNIT}`;
+  let force = false;
 
   useEffect(() => {
     const init = async () => {
       const response = await fetch(WEATHER_API);
       const data = await response.json();
+      const list = data.list || [null, null, { main: { temp: null } }];
 
-      if (!city) {
-        setCity(data.city);
-      }
+      const temp = Math.floor(list[2].main.temp);
 
-      if (!today) {
+      if (temp !== today) {
         // I'm assuming that index 2 is the current day's Noon time...
-        setToday(Math.floor(data.list[2].main.temp));
+        setToday(temp);
       }
 
-      if (forecasts.length === 0) {
-        const interval = data.list.length / 5;
+      if (force || forecasts.length === 0) {
+        const interval = list.length / 5;
         const reducer = (accu, curr, index) => {
           index++;
           if (index % interval === 0) {
@@ -35,48 +36,53 @@ function App() {
           }
           return accu;
         };
-        const list = data.list.reduce(reducer, []);
-        setForecasts(list);
+        setForecasts(list.reduce(reducer, []));
       }
     };
 
     init();
   });
 
+  const handleCity = event => {
+    force = true;
+    setCityName(event.target.value);
+  };
+
   return (
     <div className="App">
       <h1 className="visually-hidden">Forecast</h1>
 
-      {city ? (
-        <main>
-          <h2 className="city">{city.name}</h2>
+      <main>
+        <h2 className="city">
+          <input
+            type="text"
+            name="city"
+            value={cityName}
+            onChange={handleCity}
+          />
+        </h2>
 
-          <section className="today">
-            <h3 className="visually-hidden">Today</h3>
-            <p className="today__temp">{today}&deg;</p>
-          </section>
+        <section className="today">
+          <h3 className="visually-hidden">Today</h3>
+          <p className="today__temp">{today}&deg;</p>
+        </section>
 
-          <section>
-            <h3 className="visually-hidden">5-Day Forecast</h3>
+        <section>
+          <h3 className="visually-hidden">5-Day Forecast</h3>
 
-            <div className="forecasts">
-              {forecasts.map(({ main, weather, dt_txt, dt }) => (
-                <Forecast
-                  key={dt}
-                  datetime={dt_txt}
-                  temp={main.temp}
-                  icon={weather[0].icon}
-                  description={weather[0].description}
-                />
-              ))}
-            </div>
-          </section>
-        </main>
-      ) : (
-        <main>
-          <h2>Loading...</h2>
-        </main>
-      )}
+          <div className="forecasts">
+            {forecasts.map(({ main, weather, dt_txt, dt }) => (
+              <Forecast
+                key={dt}
+                datetime={dt_txt}
+                temp={main.temp}
+                icon={weather[0].icon}
+                description={weather[0].description}
+              />
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
