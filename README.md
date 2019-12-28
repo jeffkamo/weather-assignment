@@ -1,4 +1,4 @@
-# Thinkific Take-Home Assignment
+# Weather Assignment
 
 ## Task
 
