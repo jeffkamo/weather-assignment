@@ -55,6 +55,7 @@ function App() {
       <main>
         <h2 className="city">
           <input
+            className="city__input"
             type="text"
             name="city"
             value={cityName}
